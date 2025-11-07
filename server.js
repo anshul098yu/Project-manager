@@ -11,34 +11,16 @@ const path = require('path');
 // Initialize Express app
 const app = express();
 
-// Configure CORS
+// Configure CORS - Allow all origins for now (you can restrict later)
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    // List of allowed origins
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://your-frontend-vercel-url.vercel.app',
-      // Add your Vercel frontend URL here once you have it
-    ];
-
-    // Check if the origin is in our allowed list
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true, // Reflect the origin dynamically
   credentials: true,
   optionsSuccessStatus: 200
 };
 
 // Middleware
 app.use(helmet());
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Enable CORS for all routes
 app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' })); // To parse JSON request bodies
 app.use(express.urlencoded({ extended: true, limit: '10mb' })); // To parse URL-encoded bodies
