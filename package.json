@@ -9,6 +9,8 @@
     "dev:frontend": "cd frontend && npm start",
     "dev:backend": "nodemon server.js",
     "dev:both": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build": "cd frontend && npm install && npm run build",
+    "vercel-build": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
