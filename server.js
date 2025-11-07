@@ -16,7 +16,7 @@ const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
+
     // List of allowed origins
     const allowedOrigins = [
       'http://localhost:3000',
@@ -24,7 +24,7 @@ const corsOptions = {
       'https://your-frontend-vercel-url.vercel.app',
       // Add your Vercel frontend URL here once you have it
     ];
-    
+
     // Check if the origin is in our allowed list
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/api/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({
     message: '✅ Project Management System API is running successfully!',
     endpoints: {
@@ -76,14 +76,14 @@ app.get('/api/', (req, res) => {
 // Serve React app for any non-API routes in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'frontend/build')));
-  
+
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/build/index.html'));
   });
 }
 
-// Catch-all for undefined routes (optional)
-app.use('/api/*', (req, res) => {
+// Catch-all for undefined API routes (using proper pattern)
+app.use('/api/:path(*)', (req, res) => {
   res.status(404).json({
     error: 'API Route not found',
     path: req.originalUrl,
