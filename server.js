@@ -11,11 +11,37 @@ const path = require('path');
 // Initialize Express app
 const app = express();
 
+// Configure CORS
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // List of allowed origins
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://your-frontend-vercel-url.vercel.app',
+      // Add your Vercel frontend URL here once you have it
+    ];
+    
+    // Check if the origin is in our allowed list
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan('combined'));
-app.use(express.json()); // To parse JSON request bodies
+app.use(express.json({ limit: '10mb' })); // To parse JSON request bodies
+app.use(express.urlencoded({ extended: true, limit: '10mb' })); // To parse URL-encoded bodies
 
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {
@@ -33,7 +59,7 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/ai', aiRoutes);
 
 // Health check endpoint
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
   res.json({
     message: '✅ Project Management System API is running successfully!',
     endpoints: {
@@ -52,9 +78,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Catch-all for undefined routes (optional)
-app.use((req, res) => {
+app.use('/api/*', (req, res) => {
   res.status(404).json({
-    error: 'Route not found',
+    error: 'API Route not found',
     path: req.originalUrl,
   });
 });
