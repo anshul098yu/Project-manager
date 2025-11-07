@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const path = require('path');
 
 // Initialize Express app
 const app = express();
@@ -15,6 +16,11 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json()); // To parse JSON request bodies
+
+// Serve static files from React app in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'frontend/build')));
+}
 
 // Import routes
 const projectRoutes = require('./backend/routes/projects');
@@ -38,6 +44,13 @@ app.get('/', (req, res) => {
   });
 });
 
+// Serve React app for any non-API routes in production
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/build/index.html'));
+  });
+}
+
 // Catch-all for undefined routes (optional)
 app.use((req, res) => {
   res.status(404).json({
@@ -54,7 +67,7 @@ mongoose
   .connect(MONGODB_URI)
   .then(() => {
     console.log('✅ Connected to MongoDB successfully');
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server is running on port ${PORT}`);
     });
   })
