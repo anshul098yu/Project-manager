@@ -1,0 +1,128 @@
+.task-card {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-left: 4px solid #e0e0e0;
+    position: relative;
+}
+
+.task-card:active {
+    cursor: grabbing;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.task-card.status-todo {
+    border-left-color: #ffc107;
+}
+
+.task-card.status-in-progress {
+    border-left-color: #2196f3;
+}
+
+.task-card.status-done {
+    border-left-color: #4caf50;
+}
+
+.task-card.sortable-dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.task-title {
+    margin: 0;
+    color: #333;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.task-description {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.task-date {
+    font-size: 0.7rem;
+    color: #999;
+}
+
+.task-status-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.task-status-badge.status-todo {
+    background-color: #fff8e1;
+    color: #ff8f00;
+}
+
+.task-status-badge.status-in-progress {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.task-status-badge.status-done {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+.task-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.edit-task-button,
+.delete-task-button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-task-button:hover {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.delete-task-button:hover {
+    background-color: #ffebee;
+    color: #f44336;
+}
