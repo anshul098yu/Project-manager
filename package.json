@@ -1,0 +1,40 @@
+{
+  "name": "project-management-system",
+  "version": "1.0.0",
+  "description": "A full-featured project and task management application with AI integration using MERN stack and Google Gemini AI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "dev:frontend": "cd frontend && npm start",
+    "dev:backend": "nodemon server.js",
+    "dev:both": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "project-management",
+    "task-management",
+    "kanban",
+    "mern-stack",
+    "ai",
+    "gemini-ai",
+    "react",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^8.19.3",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10"
+  }
+}
