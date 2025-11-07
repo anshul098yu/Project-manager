@@ -82,11 +82,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Catch-all for undefined API routes (using proper pattern)
-app.use('/api/:path(*)', (req, res) => {
+// Catch-all for undefined API routes (simple approach)
+app.all('/api/*', (req, res) => {
   res.status(404).json({
     error: 'API Route not found',
     path: req.originalUrl,
+    method: req.method
   });
 });
 
